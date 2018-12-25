@@ -1,0 +1,13 @@
+<% include partials/header %>
+
+<h1>Post a new game</h1>
+
+<form action="/games" method="POST">
+    <input type = "text" name="name" placeholder="name">
+    <input type="text" name="image" placeholder="image url">
+    <button>Submit!</button>
+</form>
+
+<a href="/games">Back</a>
+
+<% include partials/footer%>
