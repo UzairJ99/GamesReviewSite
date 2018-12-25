@@ -19,7 +19,7 @@ app.get("/games", function(req, res)
         {name: "Spiderman", image: ""},
         {name: "Assassin's Creed", image: ""},
         {name: "Need For Speed: Rivals", image: ""}
-    ]
+    ];
     
     //passing in the games array and naming it games
     //the array is the one after the :
