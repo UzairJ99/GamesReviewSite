@@ -1,8 +1,11 @@
 //set up express js
 var express = require("express");
 var app = express();
-
+//body parser will allow us to extract text from a form
 var bodyParser = require("body-parser");
+
+//allows shortcut to not include /public in all directory calls
+app.use(express.static(__dirname +"/public"));
 
 //will allow me to skip the .ejs after every ejs type file name
 app.set("view engine", "ejs");
@@ -11,9 +14,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 //array of objects each having attributes name and image
     var games = [
-        {name: "Spiderman", image: ""},
-        {name: "Assassin's Creed", image: ""},
-        {name: "Need For Speed: Rivals", image: ""}
+        {name: "Spider-man PS4", image: "/images/spiderman.jpg"},
+        {name: "Assassin's Creed: Unity", image: "/images/assassins creed unity.jpg"},
+        {name: "Need For Speed: Rivals", image: "/images/nfs rivals.jpg"}
     ];
 
 //call landing page
