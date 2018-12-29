@@ -107,23 +107,18 @@ app.get("/games/:id", function(req, res)
 //form submits a post request for a new game
 app.post("/games", function(req, res)
 {
-   //get data from form and add to games array 
+   //get data from form and add to games database 
    var name = req.body.name;
    var image = req.body.image;
+   var rating = req.body.rating;
    //make new game object from variables
-   var newGame = {name: name, image: image};
+   var newGame = {name: name, image: image, rating: rating, stars: 0};
    //add to the database
-   Game.create(
-    {
-        name: name, 
-        image: image
-        
-    }, function(err, newgame)
+   Game.create(newGame, function(err, newgame)
     {
         if(err)
         {
             console.log(err);
-            res.redirect("/games");
         }
         else
         {

@@ -1,25 +1,37 @@
 <% include partials/header %>
 
 <div class="container">
-    <form class="form-signin">
+    <form class="form-signin" action="/games" method="POST">
         <div style="width: 50%; margin: 20% auto;">
             <h1 class="h3 mb-3 font-weight-normal" style="text-align: center;">Post a New Game</h1>
-            <form action="/games" method="POST">
+            <form>
+                <!--textfield for the name of the game-->
                 <div class="form-group">
-                    <input class="form-control" type = "text" name="name" placeholder="name">
+                    <input class="form-control" type = "text" name="name" placeholder="Name">
                 </div>
+                <!--textfield for the image url-->
                 <div class="form-group">
-                    <input class="form-control" type="text" name="image" placeholder="image url">
+                    <input class="form-control" type="text" name="image" placeholder="Image URL">
                 </div>
+                <!--age rating drop down list-->
+                <div class="form-group">
+                    <select class="custom-select d-block w-100" type="text" name="rating" required>
+                        <option name="rating" value="N/A">Age Rating</option>
+                        <option name="rating" value="Everyone">Everyone</option>
+                        <option name="rating" value="Everyone 10+">Everyone 10+</option>
+                        <option name="rating" value="Teen">Teen</option>
+                        <option name="rating" value="Mature">Mature</option>
+                    </select>
+                </div>
+                <!--submission button-->
                 <div class="form-group">
                     <button class="btn btn-large btn-primary btn-block">Submit!</button>
                 </div>
+                <!--back button-->
                 <a href="/games">Back</a>
             </form>
         </div>
-        
     </form>
-
 </div>
 
 <% include partials/footer%>
