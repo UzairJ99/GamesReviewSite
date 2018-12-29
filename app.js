@@ -22,25 +22,25 @@ var gameSchema = new mongoose.Schema(
 var Game = mongoose.model("Game", gameSchema);
 
 //test creating an object for the database
-Game.create(
-    {
-        name: "Need For Speed: Rivals", 
-        image: "/images/nfs rivals.jpg",
-        rating: "Everyone 10+",
-        stars: 4
+// Game.create(
+//     {
+//         name: "Need For Speed: Rivals", 
+//         image: "/images/nfs rivals.jpg",
+//         rating: "Everyone 10+",
+//         stars: 4
         
-    }, function(err, game)
-    {
-        if(err)
-        {
-            console.log(err);
-        }
-        else
-        {
-            console.log("Created new game: ");
-            console.log(game);
-        }
-    });
+//     }, function(err, game)
+//     {
+//         if(err)
+//         {
+//             console.log(err);
+//         }
+//         else
+//         {
+//             console.log("Created new game: ");
+//             console.log(game);
+//         }
+//     });
 
 
 //allows shortcut to not include /public in all directory calls
@@ -77,7 +77,7 @@ app.get("/games", function(req, res)
         }
         else
         {
-            res.render("games", {games: allgames});
+            res.render("index", {games: allgames});
         }
     });
 });
@@ -91,8 +91,18 @@ app.get("/games/new", function(req,res)
 //call the page to show more info about the game
 app.get("/games/:id", function(req, res)
 {
-    res.render("/");
-})
+    Game.findById(req.params.id, function(err, foundGame)
+    {
+        if(err)
+        {
+            console.log(err);
+        }
+        else
+        {
+            res.render("show", {games: foundGame});
+        }
+    });
+});
 
 //form submits a post request for a new game
 app.post("/games", function(req, res)
