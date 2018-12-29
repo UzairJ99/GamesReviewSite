@@ -1,8 +1,43 @@
 //set up express js
-var express = require("express");
-var app = express();
+var express = require("express"),
+    app = express(),
 //body parser will allow us to extract text from a form
-var bodyParser = require("body-parser");
+    bodyParser = require("body-parser"),
+//support mongo db
+    mongoose = require("mongoose");
+    
+//connect to database
+mongoose.connect("mongodb://localhost/games");
+
+//schema setup
+var gameSchema = new mongoose.Schema(
+    {
+        name: String,
+        image: String
+    });
+
+//create model using above schema   
+var Game = mongoose.model("Game", gameSchema);
+
+//test creating an object for the database
+// Game.create(
+//     {
+//         name: "Need For Speed: Rivals", 
+//         image: "/images/nfs rivals.jpg"
+        
+//     }, function(err, game)
+//     {
+//         if(err)
+//         {
+//             console.log(err);
+//         }
+//         else
+//         {
+//             console.log("Created new game: ");
+//             console.log(game);
+//         }
+//     });
+
 
 //allows shortcut to not include /public in all directory calls
 app.use(express.static(__dirname +"/public"));
@@ -13,11 +48,11 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 
 //array of objects each having attributes name and image
-    var games = [
-        {name: "Spider-man PS4", image: "/images/spiderman.jpg"},
-        {name: "Assassin's Creed: Unity", image: "/images/assassins creed unity.jpg"},
-        {name: "Need For Speed: Rivals", image: "/images/nfs rivals.jpg"}
-    ];
+    //var games = [
+      //  {name: "Spider-man PS4", image: "/images/spiderman.jpg"},
+        //{name: "Assassin's Creed: Unity", image: "/images/assassins creed unity.jpg"},
+        //{name: "Need For Speed: Rivals", image: "/images/nfs rivals.jpg"}
+    //];
 
 //call landing page
 app.get("/", function(req,res)
@@ -29,9 +64,18 @@ app.get("/", function(req,res)
 //call games page
 app.get("/games", function(req, res)
 {
-    //passing in the games array and naming it games
-    //the array is the one after the :
-    res.render("games", {games: games});
+    //get games from database
+    Game.find({}, function(err, allgames)
+    {
+        if(err)
+        {
+            console.log(err);
+        }
+        else
+        {
+            res.render("games", {games: allgames});
+        }
+    });
 });
 
 //call page with form making a new post
@@ -48,8 +92,25 @@ app.post("/games", function(req, res)
    var image = req.body.image;
    //make new game object from variables
    var newGame = {name: name, image: image};
-   //add to the array
-   games.push(newGame);
+   //add to the database
+   Game.create(
+    {
+        name: name, 
+        image: image
+        
+    }, function(err, newgame)
+    {
+        if(err)
+        {
+            console.log(err);
+            res.redirect("/games");
+        }
+        else
+        {
+            console.log("Created new game: ");
+            console.log(newgame);
+        }
+    });
    //redirect to main games page
    res.redirect("/games");
 });
