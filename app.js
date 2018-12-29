@@ -13,30 +13,34 @@ mongoose.connect("mongodb://localhost:27017/games", {useNewUrlParser: true});
 var gameSchema = new mongoose.Schema(
     {
         name: String,
-        image: String
+        image: String,
+        rating: String,
+        stars: Number
     });
 
 //create model using above schema   
 var Game = mongoose.model("Game", gameSchema);
 
 //test creating an object for the database
-// Game.create(
-//     {
-//         name: "Need For Speed: Rivals", 
-//         image: "/images/nfs rivals.jpg"
+Game.create(
+    {
+        name: "Need For Speed: Rivals", 
+        image: "/images/nfs rivals.jpg",
+        rating: "Everyone 10+",
+        stars: 4
         
-//     }, function(err, game)
-//     {
-//         if(err)
-//         {
-//             console.log(err);
-//         }
-//         else
-//         {
-//             console.log("Created new game: ");
-//             console.log(game);
-//         }
-//     });
+    }, function(err, game)
+    {
+        if(err)
+        {
+            console.log(err);
+        }
+        else
+        {
+            console.log("Created new game: ");
+            console.log(game);
+        }
+    });
 
 
 //allows shortcut to not include /public in all directory calls
@@ -83,6 +87,12 @@ app.get("/games/new", function(req,res)
 {
     res.render("new");
 });
+
+//call the page to show more info about the game
+app.get("/games/:id", function(req, res)
+{
+    res.render("/");
+})
 
 //form submits a post request for a new game
 app.post("/games", function(req, res)
