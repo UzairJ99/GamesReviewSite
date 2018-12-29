@@ -6,8 +6,8 @@ var express = require("express"),
 //support mongo db
     mongoose = require("mongoose");
     
-//connect to database
-mongoose.connect("mongodb://localhost/games");
+//connect to database (format is for newest version of mongoose)
+mongoose.connect("mongodb://localhost:27017/games", {useNewUrlParser: true});
 
 //schema setup
 var gameSchema = new mongoose.Schema(
