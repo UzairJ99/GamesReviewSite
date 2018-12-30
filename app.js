@@ -4,44 +4,17 @@ var express = require("express"),
 //body parser will allow us to extract text from a form
     bodyParser = require("body-parser"),
 //support mongo db
-    mongoose = require("mongoose");
-    
+    mongoose = require("mongoose"),
+//calls the mongoose model from games.js
+    Game = require("./models/games"),
+    Comment = require("./models/comments"),
+    seedDB = require("./seeds");
+
+//call function from seeds.js
+seedDB();
+
 //connect to database (format is for newest version of mongoose)
 mongoose.connect("mongodb://localhost:27017/games", {useNewUrlParser: true});
-
-//schema setup
-var gameSchema = new mongoose.Schema(
-    {
-        name: String,
-        image: String,
-        rating: String,
-        stars: Number
-    });
-
-//create model using above schema   
-var Game = mongoose.model("Game", gameSchema);
-
-//test creating an object for the database
-// Game.create(
-//     {
-//         name: "Need For Speed: Rivals", 
-//         image: "/images/nfs rivals.jpg",
-//         rating: "Everyone 10+",
-//         stars: 4
-        
-//     }, function(err, game)
-//     {
-//         if(err)
-//         {
-//             console.log(err);
-//         }
-//         else
-//         {
-//             console.log("Created new game: ");
-//             console.log(game);
-//         }
-//     });
-
 
 //allows shortcut to not include /public in all directory calls
 app.use(express.static(__dirname +"/public"));
@@ -91,7 +64,7 @@ app.get("/games/new", function(req,res)
 //call the page to show more info about the game
 app.get("/games/:id", function(req, res)
 {
-    Game.findById(req.params.id, function(err, foundGame)
+    Game.findById(req.params.id).populate("comments").exec(function(err, foundGame)
     {
         if(err)
         {
@@ -99,6 +72,7 @@ app.get("/games/:id", function(req, res)
         }
         else
         {
+            console.log(foundGame);
             res.render("show", {games: foundGame});
         }
     });

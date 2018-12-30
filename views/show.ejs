@@ -4,7 +4,15 @@
 
 <p><%= games.name%></p>
 <img src="<%= games.image%>">
-<p><%=games.rating%></p>
-<p><%=games.stars%></p>
+<p>Rated <%=games.rating%></p>
+<p><%=games.stars%> stars</p>
+
+<!--loop through comments-->
+<% games.comments.forEach(function(comment)
+{ %>
+    <p>
+        <strong><%= comment.author %></strong>: <%=comment.text%>
+    </p>
+<% }) %>
 
 <% include partials/footer%>
