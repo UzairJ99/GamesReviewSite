@@ -50,7 +50,7 @@ app.get("/games", function(req, res)
         }
         else
         {
-            res.render("index", {games: allgames});
+            res.render("games/index", {games: allgames});
         }
     });
 });
@@ -58,7 +58,7 @@ app.get("/games", function(req, res)
 //call page with form making a new post
 app.get("/games/new", function(req,res)
 {
-    res.render("new");
+    res.render("games/new");
 });
 
 //call the page to show more info about the game
@@ -73,7 +73,7 @@ app.get("/games/:id", function(req, res)
         else
         {
             console.log(foundGame);
-            res.render("show", {games: foundGame});
+            res.render("games/show", {games: foundGame});
         }
     });
 });
@@ -102,6 +102,23 @@ app.post("/games", function(req, res)
     });
    //redirect to main games page
    res.redirect("/games");
+});
+
+
+//routes for adding a new review
+app.get("/games/:id/reviews/new", function(req, res)
+{
+    Game.findById(req.params.id, function(err, game)
+    {
+        if(err)
+        {
+            console.log(err);
+        }
+        else
+        {
+            res.render("comments/new", {games: game});
+        }
+    });
 });
 
 //start the server
