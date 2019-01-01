@@ -121,6 +121,38 @@ app.get("/games/:id/reviews/new", function(req, res)
     });
 });
 
+//Post route to add a new review
+app.post("/games/:id/reviews", function(req,res)
+{
+    //get game with id
+    Game.findById(req.params.id, function(err, foundGame)
+    {
+        if(err)
+        {
+            console.log(err);
+            res.redirect("/games");
+        }
+        else
+        {
+            //create new comment
+            Comment.create(req.body.comment, function(err, newComment)
+            {
+                if(err)
+                {
+                    console.log(err);
+                }
+                else
+                {
+                    //connect the comment to the game
+                    foundGame.comments.push(newComment);
+                    foundGame.save();
+                    res.redirect("/games/" + foundGame._id);
+                }
+            });
+        }
+    });
+});
+
 //start the server
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("Server started.");
