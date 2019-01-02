@@ -25,15 +25,23 @@
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li>
-            <a class="nav-link" href="/">Login <span class="sr-only">(current)</span></a>
-          </li>
-          <li>
-            <a class="nav-link" href="/">Create Account</a>
-          </li>
-          <li>
-            <a class="nav-link" href="/">Logout</a>
-          </li>
+          <!--if a user  is not logged in-->
+            <% if(!currentUser) { %>
+              <li>
+                <a class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a>
+              </li>
+              <li>
+                <a class="nav-link" href="/register">Create Account</a>
+              </li>
+            <% } else { %>
+          <!--if a user is logged in-->
+              <li>
+                <a class="nav-link" href="/logout">Logout</a>
+              </li>
+              <li>
+                <a class="nav-link">Signed In As <%= currentUser.username %></a>
+              </li>
+              <% } %>
         </ul>
       </div>
     </nav>

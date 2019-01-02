@@ -41,6 +41,12 @@ app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.use(function(req, res, next)
+{
+    res.locals.currentUser = req.user;
+    next();
+});
+
 //call landing page
 app.get("/", function(req,res)
 {
@@ -116,7 +122,7 @@ app.post("/games", function(req, res)
 
 
 //routes for adding a new review
-app.get("/games/:id/reviews/new", function(req, res)
+app.get("/games/:id/reviews/new", isLoggedIn, function(req, res)
 {
     Game.findById(req.params.id, function(err, game)
     {
@@ -132,7 +138,7 @@ app.get("/games/:id/reviews/new", function(req, res)
 });
 
 //Post route to add a new review
-app.post("/games/:id/reviews", function(req,res)
+app.post("/games/:id/reviews", isLoggedIn, function(req,res)
 {
     //get game with id
     Game.findById(req.params.id, function(err, foundGame)
@@ -192,8 +198,35 @@ app.post("/register", function(req, res)
 //show login form
 app.get("/login", function(req,res)
 {
-    res.render("/login");
+    res.render("login");
 });
+
+//login handling
+app.post("/login", passport.authenticate("local", 
+{
+    successRedirect: "/games", 
+    failureRedirect: "/login"
+}),
+function(req, res)
+{
+});
+
+//logout route
+app.get("/logout", function(req, res)
+{
+    req.logout();
+    res.redirect("/games");
+});
+
+//function to check if a user is logged in
+function isLoggedIn(req, res, next)
+{
+    if(req.isAuthenticated())
+    {
+        return next();
+    }
+    res.redirect("/login");
+}
 
 //start the server
 app.listen(process.env.PORT, process.env.IP, function(){
