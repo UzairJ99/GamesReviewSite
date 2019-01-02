@@ -5,13 +5,30 @@ var express = require("express"),
     bodyParser = require("body-parser"),
 //support mongo db
     mongoose = require("mongoose"),
-//calls the mongoose model from games.js
+//user authentication variables
+    passport = require("passport"),
+    LocalStrategy = require("passport-local"),
+//calls the mongoose models
     Game = require("./models/games"),
     Comment = require("./models/comments"),
+    User = require("./models/user"),
     seedDB = require("./seeds");
-
+    
 //call function from seeds.js
 seedDB();
+
+//Passport configuration
+app.use(require("express-session")(
+    {
+        secret: "blah",
+        resave: false,
+        saveUninitialized: false
+    }));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 //connect to database (format is for newest version of mongoose)
 mongoose.connect("mongodb://localhost:27017/games", {useNewUrlParser: true});
@@ -23,13 +40,6 @@ app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({extended: true}));
-
-//array of objects each having attributes name and image
-    //var games = [
-      //  {name: "Spider-man PS4", image: "/images/spiderman.jpg"},
-        //{name: "Assassin's Creed: Unity", image: "/images/assassins creed unity.jpg"},
-        //{name: "Need For Speed: Rivals", image: "/images/nfs rivals.jpg"}
-    //];
 
 //call landing page
 app.get("/", function(req,res)
@@ -72,7 +82,6 @@ app.get("/games/:id", function(req, res)
         }
         else
         {
-            console.log(foundGame);
             res.render("games/show", {games: foundGame});
         }
     });
@@ -85,8 +94,9 @@ app.post("/games", function(req, res)
    var name = req.body.name;
    var image = req.body.image;
    var rating = req.body.rating;
+   var desc = req.body.description;
    //make new game object from variables
-   var newGame = {name: name, image: image, rating: rating, stars: 0};
+   var newGame = {name: name, image: image, rating: rating, stars: 0, description: desc};
    //add to the database
    Game.create(newGame, function(err, newgame)
     {
@@ -151,6 +161,38 @@ app.post("/games/:id/reviews", function(req,res)
             });
         }
     });
+});
+
+//authentication routes
+app.get("/register", function(req,res)
+{
+    res.render("register");
+});
+
+//handle sign up
+app.post("/register", function(req, res)
+{
+    //create new user without a password
+    var newUser = new User({username:req.body.username});
+    //register the user and assign a password
+    User.register(newUser, req.body.password, function(err, user)
+    {
+        if(err)
+        {
+            console.log(err);
+            return res.render("register");
+        }
+        passport.authenticate("local")(req, res, function()
+        {
+            res.redirect("/games");
+        });
+    });
+});
+
+//show login form
+app.get("/login", function(req,res)
+{
+    res.render("/login");
 });
 
 //start the server

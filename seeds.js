@@ -7,19 +7,22 @@ var data = [
         name: "Spider-Man PS4", 
         image: "/images/spiderman.jpg",
         rating: "Teen",
-        stars: 4
+        stars: 4,
+        description: "Marvel's Spider-Man is an action-adventure game developed by Insomniac Games and published by Sony Interactive Entertainment for the PlayStation 4, based on the Marvel Comics superhero Spider-Man. Released worldwide on September 7, 2018, it was the first licensed game developed by Insomniac. The game tells an original story about Spider-Man that is not tied to any other existing piece of media, and covers both the Peter Parker and Spider-Man aspects of the character."
     },
     {
         name: "Assassin's Creed: Unity", 
         image: "/images/assassins creed unity.jpg",
         rating: "Mature",
-        stars: 3.8
+        stars: 3.8,
+        description: "Assassin's Creed Unity is an action-adventure video game developed by Ubisoft Montreal and published by Ubisoft. It was released in November 2014 for Microsoft Windows, PlayStation 4 and Xbox One. It is the eighth major installment in the Assassin's Creed series, and the successor to 2013's Assassin's Creed IV: Black Flag. It also has ties to Assassin's Creed Rogue which was released for the previous generation consoles, the PlayStation 3 and Xbox 360 on the same date." 
     },
     {
         name: "Need For Speed: Rivals", 
         image: "/images/nfs rivals.jpg",
         rating: "Everyone 10+",
-        stars: 4
+        stars: 4,
+        description: "Need for Speed Rivals is a racing video game developed in a collaboration between Ghost Games and Criterion Games, and published by Electronic Arts. It is the twentieth installment in the Need for Speed series. The game was released for Microsoft Windows, PlayStation 3, Xbox 360, PlayStation 4 and Xbox One in November 2013."
     }
 ];
  
@@ -29,12 +32,10 @@ function seedDB(){
         if(err){
             console.log(err);
         }
-        console.log("removed all games");
         Comment.remove({}, function(err) {
             if(err){
                 console.log(err);
             }
-            console.log("removed all comments");
              //add a few campgrounds
             data.forEach(function(seed)
             {
@@ -46,7 +47,6 @@ function seedDB(){
                     } 
                     else 
                     {
-                        console.log("Added a new game");
                         //create a comment
                         Comment.create(
                             {
@@ -63,7 +63,6 @@ function seedDB(){
                                 {
                                     game.comments.push(comment);
                                     game.save();
-                                    console.log("Added new comment");
                                 }
                             });
                     }
