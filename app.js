@@ -17,7 +17,7 @@ seedDB();
 mongoose.connect("mongodb://localhost:27017/games", {useNewUrlParser: true});
 
 //allows shortcut to not include /public in all directory calls
-app.use(express.static(__dirname +"/public"));
+app.use(express.static(__dirname + "/public"));
 
 //will allow me to skip the .ejs after every ejs type file name
 app.set("view engine", "ejs");
