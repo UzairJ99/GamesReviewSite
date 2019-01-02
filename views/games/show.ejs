@@ -1,27 +1,44 @@
 <% include ../partials/header%>
 
-<h1>Show page</h1>
-
-<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
-  <div class="my-3 py-3">
-      <img src="<%= games.image%>">
+<div style="width: 70%; margin: 100px auto;" class="container">
+    
+    <div class="media">
+        <div class="media-body">
+            <h1 class="mt-0 mb-1"><%= games.name%></h1>
+            <h4>Rated <%=games.rating%></h4>
+            <h4><%=games.stars%> <i class="fas fa-star"></i></h4>
+        </div>   
+        <img src="<%= games.image%>" class="ml-3" alt="Responsive image">
     </div>
-  
-  <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+    
+    <hr>
+    
+    <div class="card text-white bg-dark mb-3">
+            <div class="card-header">
+                <span class="h2">Reviews</span> 
+                <p class="float-right">
+                    <a class="btn btn-success" href="/games/<%=games._id%>/reviews/new">Add Review</a>
+                </p>
+            </div>
+            <div class="card-body">
+                <!--loop through comments-->
+                <% games.comments.forEach(function(comment)
+                    { %>
+                        <blockquote class="blockquote">
+                        <%=comment.text%>
+                        <p class="h6 text-muted">
+                            <%=comment.stars%> <i class="fas fa-star"></i>
+                        </p>
+                        
+                        <footer class="blockquote-footer"><%= comment.author %></footer>
+                        </blockquote>
+                <% }) %>
+                
+                
+            </div>
+        </div>
+    </div>
+    
 </div>
-
-
-<!--<p><%= games.name%></p>-->
-<!--<img src="<%= games.image%>">-->
-<!--<p>Rated <%=games.rating%></p>-->
-<!--<p><%=games.stars%> stars</p>-->
-
-<!--loop through comments-->
-<% games.comments.forEach(function(comment)
-{ %>
-    <p>
-        <strong><%= comment.author %></strong>: <%=comment.text%>
-    </p>
-<% }) %>
 
 <% include ../partials/footer%>

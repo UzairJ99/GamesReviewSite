@@ -4,7 +4,7 @@ var Comment   = require("./models/comments");
  
 var data = [
     {
-        name: "Spider-man PS4", 
+        name: "Spider-Man PS4", 
         image: "/images/spiderman.jpg",
         rating: "Teen",
         stars: 4
@@ -51,7 +51,8 @@ function seedDB(){
                         Comment.create(
                             {
                                 text: "Cool game.",
-                                author: "Gamer123"
+                                author: "Gamer123",
+                                stars: 3.8
                             }, function(err, comment)
                             {
                                 if(err)
