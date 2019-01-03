@@ -5,12 +5,11 @@ var router = express.Router();
 //get passport.js
 var passport = require("passport");
 //mongoose models
-var Game = require("../models/games"),
-    Comment = require("../models/comments"),
-    User = require("../models/user");
+
+var User = require("../models/user");
 
 //call landing page
-router.get("/", function(req,res)
+router.get("", function(req,res)
 {
     //renders the landing page
     res.render("landing");

@@ -55,9 +55,9 @@ app.use(function(req, res, next)
 });
 
 //use the routes
-app.use(indexRoutes);
-app.use(gamesRoutes);
-app.use(reviewRoutes);
+app.use("/", indexRoutes);
+app.use("/games", gamesRoutes);
+app.use("/games/:id/reviews", reviewRoutes);
 
 //start the server
 app.listen(process.env.PORT, process.env.IP, function(){

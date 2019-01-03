@@ -27,29 +27,6 @@
         </div>
     </div>
     
-    <!--<div class="media">-->
-    <!--    <div class="media-body">-->
-            <!--name of game-->
-    <!--        <h1 class="mt-0 mb-1"><%= games.name%></h1>-->
-            <!--stars-->
-    <!--        <h4><%=games.stars%> <i class="fas fa-star"></i></h4>-->
-            
-    <!--        <p><%=games.description%></p>-->
-            
-            <!--check rating and post correct image-->
-    <!--        <% //if (games.rating == "Teen") { %>-->
-    <!--            <img src="/images/ratings/teen.jpg">-->
-    <!--        <% //} else if (games.rating == "Mature") {%>-->
-    <!--            <img src="/images/ratings/mature.jpg">-->
-    <!--        <% //} else if (games.rating == "Everyone 10+") {%>-->
-    <!--            <img src="/images/ratings/10+.jpg">-->
-    <!--        <% //} else if (games.rating == "Everyone") {%>-->
-    <!--            <img src="/images/ratings/everyone.jpg">-->
-    <!--        <% //} %>-->
-    <!--    </div>   -->
-    <!--    <img src="<%= games.image%>" class="ml-3" alt="Responsive image">-->
-    <!--</div>-->
-    
     <hr>
     
     <div class="card text-white bg-dark mb-3">
@@ -68,8 +45,7 @@
                         <p class="h6 text-muted">
                             <%=comment.stars%> <i class="fas fa-star"></i>
                         </p>
-                        
-                        <footer class="blockquote-footer"><%= comment.author %></footer>
+                        <footer class="blockquote-footer"><%= comment.author.username %></footer>
                         </blockquote>
                 <% }) %>
                 

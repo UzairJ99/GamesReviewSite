@@ -1,14 +1,13 @@
 //declare dependant variables
 var express = require("express");
 //replaces app. with router.
-var router = express.Router();
+var router = express.Router({mergeParams: true});
 //mongoose models
 var Game = require("../models/games"),
-    Comment = require("../models/comments"),
-    User = require("../models/user");
+    Comment = require("../models/comments");
 
 //routes for adding a new review
-router.get("/games/:id/reviews/new", isLoggedIn, function(req, res)
+router.get("/new", isLoggedIn, function(req, res)
 {
     Game.findById(req.params.id, function(err, game)
     {
@@ -24,7 +23,7 @@ router.get("/games/:id/reviews/new", isLoggedIn, function(req, res)
 });
 
 //Post route to add a new review
-router.post("/games/:id/reviews", isLoggedIn, function(req,res)
+router.post("/", isLoggedIn, function(req,res)
 {
     //get game with id
     Game.findById(req.params.id, function(err, foundGame)
@@ -45,6 +44,10 @@ router.post("/games/:id/reviews", isLoggedIn, function(req,res)
                 }
                 else
                 {
+                    //add username and id to comment
+                    newComment.author.id = req.user._id;
+                    newComment.author.username = req.user.username;
+                    newComment.save();
                     //connect the comment to the game
                     foundGame.comments.push(newComment);
                     foundGame.save();

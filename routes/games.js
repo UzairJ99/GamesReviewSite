@@ -1,7 +1,7 @@
 //declare dependant variables
 var express = require("express");
 //replaces app. with router.
-var router = express.Router();
+var router = express.Router({mergeParams: true});
 
 //mongoose models
 var Game = require("../models/games"),
@@ -10,7 +10,7 @@ var Game = require("../models/games"),
     
     
 //call games page
-router.get("/games", function(req, res)
+router.get("/", function(req, res)
 {
     //get games from database
     Game.find({}, function(err, allgames)
@@ -27,13 +27,13 @@ router.get("/games", function(req, res)
 });
 
 //call page with form making a new post
-router.get("/games/new", isLoggedIn, function(req,res)
+router.get("/new", isLoggedIn, function(req,res)
 {
     res.render("games/new");
 });
 
 //call the page to show more info about the game
-router.get("/games/:id", function(req, res)
+router.get("/:id", function(req, res)
 {
     Game.findById(req.params.id).populate("comments").exec(function(err, foundGame)
     {
@@ -49,7 +49,7 @@ router.get("/games/:id", function(req, res)
 });
 
 //form submits a post request for a new game
-router.post("/games", function(req, res)
+router.post("/", function(req, res)
 {
    //get data from form and add to games database 
    var name = req.body.name;
@@ -67,8 +67,8 @@ router.post("/games", function(req, res)
         }
         else
         {
-            console.log("Created new game: ");
-            console.log(newgame);
+            // console.log("Created new game: ");
+            // console.log(newgame);
         }
     });
    //redirect to main games page
