@@ -24,22 +24,22 @@
             <a class="nav-link" href="/games/new">New</a>
           </li>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav">
           <!--if a user  is not logged in-->
             <% if(!currentUser) { %>
               <li>
-                <a class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a>
+                <a id="login" class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a>
               </li>
               <li>
-                <a class="nav-link" href="/register">Create Account</a>
+                <a id="login" class="nav-link" href="/register">Create Account</a>
               </li>
             <% } else { %>
           <!--if a user is logged in-->
+              <span>
+                <a id="login" class="nav-link disabled">Signed In As <%= currentUser.username %></a>
+              </span>
               <li>
-                <a class="nav-link" href="/logout">Logout</a>
-              </li>
-              <li>
-                <a class="nav-link">Signed In As <%= currentUser.username %></a>
+                <a id="login" class="nav-link" href="/logout">Logout</a>
               </li>
               <% } %>
         </ul>

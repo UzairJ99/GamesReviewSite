@@ -24,3 +24,8 @@ body
     background-color: #385787;
     color:white;
 }
+
+.rating
+{
+    padding-bottom: 12px;
+}
