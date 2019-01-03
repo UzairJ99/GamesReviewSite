@@ -72,7 +72,7 @@ app.get("/games", function(req, res)
 });
 
 //call page with form making a new post
-app.get("/games/new", function(req,res)
+app.get("/games/new", isLoggedIn, function(req,res)
 {
     res.render("games/new");
 });
