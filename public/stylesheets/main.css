@@ -29,3 +29,9 @@ body
 {
     padding-bottom: 12px;
 }
+
+#rightSide
+{
+    margin-right: 0;
+    margin-left: auto;
+}
