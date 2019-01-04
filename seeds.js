@@ -58,7 +58,7 @@ function seedDB(){
                         Comment.create(
                             {
                                 text: "Cool game.",
-                                author: "Gamer123",
+                                author: {username: "The Game Prism"},
                                 stars: 3.8
                             }, function(err, comment)
                             {
