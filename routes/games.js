@@ -56,8 +56,12 @@ router.post("/", function(req, res)
    var image = req.body.image;
    var rating = req.body.rating;
    var desc = req.body.description;
+   //add user information to game
+   var author = {id: req.user._id, username: req.user.username};
+   
    //make new game object from variables
-   var newGame = {name: name, image: image, rating: rating, stars: 0, description: desc};
+   var newGame = {name: name, image: image, rating: rating, stars: 0, description: desc, author: author};
+   
    //add to the database
    Game.create(newGame, function(err, newgame)
     {
