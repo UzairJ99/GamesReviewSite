@@ -1,0 +1,43 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <form class="form-signin" action="/games/<%=game._id%>/?_method=PUT" method="POST">
+        <div class= "text-center" style="width: 50%; margin: 15% auto;" id="showTemplate">
+            <br>
+            <img id="logo" style="height:80px;" src="/images/logo.png">
+            <h1 class="h3 mb-3 font-weight-normal" style="text-align: center;">Edit <%=game.name%></h1>
+            <form>
+                <!--textfield for the name of the game-->
+                <div class="form-group">
+                    <input class="form-control" type = "text" name="game[name]" value = "<%=game.name%>">
+                </div>
+                <!--textfield for the image url-->
+                <div class="form-group">
+                    <input class="form-control" type="text" name="game[image]" value = "<%=game.image%>">
+                </div>
+                <!--textfield for description-->
+                <div class="form-group">
+                    <input class="form-control" type = "text" name="game[description]" value = "<%=game.description%>">
+                </div>
+                <!--age rating drop down list-->
+                <div class="form-group">
+                    <select class="custom-select d-block w-100" type="text" name="game[rating]" required>
+                        <option name="game[rating]" value="N/A">Age Rating</option>
+                        <option name="game[rating]" value="Everyone">Everyone</option>
+                        <option name="game[rating]" value="Everyone 10+">Everyone 10+</option>
+                        <option name="game[rating]" value="Teen">Teen</option>
+                        <option name="game[rating]" value="Mature">Mature</option>
+                    </select>
+                </div>
+                <!--submission button-->
+                <div class="form-group">
+                    <button class="btn btn-large btn-primary btn-block">Submit!</button>
+                </div>
+                <!--back button-->
+                <a href="/games">Back</a>
+            </form>
+        </div>
+    </form>
+</div>
+
+<% include ../partials/footer%>

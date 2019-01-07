@@ -82,10 +82,39 @@ router.post("/", function(req, res)
 //edit game route
 router.get("/:id/edit", function(req, res)
 {
-    
+    //search for game using it's id
+    Game.findById(req.params.id, function(err, foundGame)
+    {
+        if(err)
+        {
+            console.log(err);
+            res.redirect("/games");
+        }
+        else
+        {
+            //render edit page and pass in foundGame as game
+            res.render("games/edit", {game: foundGame});
+        }
+    });
 });
 
 //update game route
+router.put("/:id", function(req, res)
+{
+   //find and update game information
+   Game.findByIdAndUpdate(req.params.id, req.body.game, function(err, updatedGame)
+   {
+       if(err)
+       {
+           res.redirect("/games");
+       }
+       else
+       {
+           //redirect to show page
+           res.redirect("/games/" + updatedGame._id);
+       }
+   });
+});
 
 //function to check if a user is logged in
 function isLoggedIn(req, res, next)
