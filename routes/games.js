@@ -79,6 +79,14 @@ router.post("/", function(req, res)
    res.redirect("/games");
 });
 
+//edit game route
+router.get("/:id/edit", function(req, res)
+{
+    
+});
+
+//update game route
+
 //function to check if a user is logged in
 function isLoggedIn(req, res, next)
 {
