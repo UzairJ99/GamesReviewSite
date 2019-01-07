@@ -8,7 +8,6 @@ var Game = require("../models/games"),
     Comment = require("../models/comments"),
     User = require("../models/user");
     
-    
 //call games page
 router.get("/", function(req, res)
 {
@@ -80,8 +79,9 @@ router.post("/", function(req, res)
 });
 
 //edit game route
-router.get("/:id/edit", function(req, res)
+router.get("/:id/edit", isLoggedIn, function(req, res)
 {
+    var currUser = {id: req.user._id, username: req.user.username};
     //search for game using it's id
     Game.findById(req.params.id, function(err, foundGame)
     {
@@ -93,13 +93,13 @@ router.get("/:id/edit", function(req, res)
         else
         {
             //render edit page and pass in foundGame as game
-            res.render("games/edit", {game: foundGame});
+            res.render("games/edit", {game: foundGame, user: currUser});
         }
     });
 });
 
 //update game route
-router.put("/:id", function(req, res)
+router.put("/:id", isLoggedIn, function(req, res)
 {
    //find and update game information
    Game.findByIdAndUpdate(req.params.id, req.body.game, function(err, updatedGame)
