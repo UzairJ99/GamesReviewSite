@@ -33,6 +33,7 @@ body
 .rating
 {
     padding-bottom: 12px;
+    display: block;
 }
 
 #rightSide
@@ -44,4 +45,9 @@ body
 #logo
 {
     margin-bottom: 20px;
+}
+
+#deleteBtn
+{
+    display: inline;
 }

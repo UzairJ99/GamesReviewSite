@@ -21,8 +21,11 @@
             <% } else if (games.rating == "Everyone") {%>
                 <img class="rating" src="/images/ratings/everyone.jpg">
             <% } %>
-            <footer class="blockquote-footer">Submitted By: <%= games.author.username %> &ensp;<a class="text-muted" href="/games/<%=games._id%>/edit"><i class="far fa-edit"></i></a></footer>
-            
+            <footer id="deleteBtn" class="blockquote-footer">Submitted By: <%= games.author.username %> &ensp;<a class="text-muted" href="/games/<%=games._id%>/edit"><i class="far fa-edit"></i></a></footer>
+            <!--delete button-->
+            <form id="deleteBtn" action="/games/<%=games._id%>?_method=DELETE" method="POST">
+                <button style="border: none; background-color: Transparent;" class="text-muted">&ensp;<i class="far fa-trash-alt"></i></button>
+            </form>
         </div>
         <div class="col-lg-6 col-md-12 col-sm-12">
             <img style='height: 100%; width: 100%; object-fit: contain' src="<%= games.image%>" class="fluid" alt="Responsive image">

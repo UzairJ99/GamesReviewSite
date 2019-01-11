@@ -116,6 +116,22 @@ router.put("/:id", isLoggedIn, function(req, res)
    });
 });
 
+//destroy route
+router.delete("/:id", function(req, res)
+{
+    Game.findByIdAndRemove(req.params.id, function(err)
+    {
+        if(err)
+        {
+            res.redirect("/games");
+        }
+        else
+        {
+            res.redirect("/games");
+        }
+    });
+});
+
 //function to check if a user is logged in
 function isLoggedIn(req, res, next)
 {
