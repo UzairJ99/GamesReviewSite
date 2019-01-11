@@ -79,48 +79,18 @@ router.post("/", function(req, res)
 });
 
 //edit game route
-router.get("/:id/edit", function(req, res)
+router.get("/:id/edit", checkGameOwnership, function(req, res)
 {
-    //is user logged in
-    if(req.isAuthenticated())
+    //search for game using it's id
+    Game.findById(req.params.id, function(err, foundGame)
     {
-        //search for game using it's id
-        Game.findById(req.params.id, function(err, foundGame)
-        {
-            if(err)
-            {
-                console.log(err);
-                res.redirect("/games");
-            }
-            else
-            {
-                //does user own the post
-                if(foundGame.author.id.equals(req.user._id))
-                {
-                    //render edit page and pass in foundGame as game
-                    res.render("games/edit", {game: foundGame});
-                }
-                else
-                {
-                    console.log("Need to be logged in.");
-                    res.send("Need to be logged in.");
-                }
-            }
-        });
-    }
-    else
-    {
-        console.log("Need to be logged in.");
-        res.send("Need to be logged in.");
-    }
-        
-        //redirect if not
-    //redirect if not
-        
+        //render edit page and pass in foundGame as game
+        res.render("games/edit", {game: foundGame});
+    });
 });
 
 //update game route
-router.put("/:id", isLoggedIn, function(req, res)
+router.put("/:id", checkGameOwnership, function(req, res)
 {
    //find and update game information
    Game.findByIdAndUpdate(req.params.id, req.body.game, function(err, updatedGame)
@@ -138,7 +108,7 @@ router.put("/:id", isLoggedIn, function(req, res)
 });
 
 //destroy route
-router.delete("/:id", function(req, res)
+router.delete("/:id", checkGameOwnership, function(req, res)
 {
     Game.findByIdAndRemove(req.params.id, function(err)
     {
@@ -161,6 +131,40 @@ function isLoggedIn(req, res, next)
         return next();
     }
     res.redirect("/login");
+}
+
+//function to authorize user
+function checkGameOwnership(req, res, next)
+{
+    //is user logged in
+    if(req.isAuthenticated())
+    {
+        //search for game using it's id
+        Game.findById(req.params.id, function(err, foundGame)
+        {
+            if(err)
+            {
+                console.log(err);
+                res.redirect("back");
+            }
+            else
+            {
+                //does user own the post
+                if(foundGame.author.id.equals(req.user._id))
+                {
+                    next();
+                }
+                else
+                {
+                    res.redirect("back");
+                }
+            }
+        });
+    }
+    else
+    {
+        res.redirect("back");
+    }
 }
 
 module.exports = router;

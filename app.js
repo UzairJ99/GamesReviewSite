@@ -22,7 +22,7 @@ var gamesRoutes = require("./routes/games"),
     indexRoutes = require("./routes/index");
     
 //call function from seeds.js
-seedDB();
+//seedDB();
 
 //Passport configuration
 app.use(require("express-session")(
