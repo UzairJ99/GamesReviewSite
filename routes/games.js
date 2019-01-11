@@ -79,23 +79,44 @@ router.post("/", function(req, res)
 });
 
 //edit game route
-router.get("/:id/edit", isLoggedIn, function(req, res)
+router.get("/:id/edit", function(req, res)
 {
-    var currUser = {id: req.user._id, username: req.user.username};
-    //search for game using it's id
-    Game.findById(req.params.id, function(err, foundGame)
+    //is user logged in
+    if(req.isAuthenticated())
     {
-        if(err)
+        //search for game using it's id
+        Game.findById(req.params.id, function(err, foundGame)
         {
-            console.log(err);
-            res.redirect("/games");
-        }
-        else
-        {
-            //render edit page and pass in foundGame as game
-            res.render("games/edit", {game: foundGame, user: currUser});
-        }
-    });
+            if(err)
+            {
+                console.log(err);
+                res.redirect("/games");
+            }
+            else
+            {
+                //does user own the post
+                if(foundGame.author.id.equals(req.user._id))
+                {
+                    //render edit page and pass in foundGame as game
+                    res.render("games/edit", {game: foundGame});
+                }
+                else
+                {
+                    console.log("Need to be logged in.");
+                    res.send("Need to be logged in.");
+                }
+            }
+        });
+    }
+    else
+    {
+        console.log("Need to be logged in.");
+        res.send("Need to be logged in.");
+    }
+        
+        //redirect if not
+    //redirect if not
+        
 });
 
 //update game route
