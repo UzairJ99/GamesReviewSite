@@ -58,8 +58,8 @@ router.post("/", isLoggedIn, function(req,res)
     });
 });
 
-//delete route
-router.delete("/:comment_id", function(req, res)
+//delete review
+router.delete("/:comment_id", checkReviewOwnership, function(req, res)
 {
     //find by id and remove
     Comment.findByIdAndRemove(req.params.comment_id, function(err)
@@ -70,6 +70,7 @@ router.delete("/:comment_id", function(req, res)
         }
         else
         {
+            //redirect to the game
             res.redirect("/games/" + req.params.id);
         }
     });
@@ -83,6 +84,40 @@ function isLoggedIn(req, res, next)
         return next();
     }
     res.redirect("/login");
+}
+
+//function to authorize user
+function checkReviewOwnership(req, res, next)
+{
+    //is user logged in
+    if(req.isAuthenticated())
+    {
+        //search for game using it's id
+        Comment.findById(req.params.comment_id, function(err, foundComment)
+        {
+            if(err)
+            {
+                console.log(err);
+                res.redirect("back");
+            }
+            else
+            {
+                //does user own the comment
+                if(foundComment.author.id.equals(req.user._id))
+                {
+                    next();
+                }
+                else
+                {
+                    res.redirect("back");
+                }
+            }
+        });
+    }
+    else
+    {
+        res.redirect("back");
+    }
 }
 
 module.exports = router;
