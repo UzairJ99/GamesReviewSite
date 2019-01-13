@@ -46,3 +46,16 @@
         </ul>
       </div>
     </nav>
+<div class="container">
+  <% if(error && error.length > 0) {%>
+    <div style="width: 100%; margin: 100px auto; margin-bottom: 0;" class="alert alert-danger text-center" role="alert">
+      <%= error %>
+    </div>
+  <% } if(success && success.length > 0) { %>
+    <div style="width: 100%; margin: 100px auto; margin-bottom: 0;" class="alert alert-primary text-center" role="alert">
+      <%= success %>
+    </div>
+  <% } %>
+</div>
+
+    

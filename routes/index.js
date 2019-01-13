@@ -61,6 +61,7 @@ function(req, res)
 router.get("/logout", function(req, res)
 {
     req.logout();
+    req.flash("success", "Logged you out!");
     res.redirect("/games");
 });
 
@@ -71,6 +72,7 @@ function isLoggedIn(req, res, next)
     {
         return next();
     }
+    req.flash("error","Please login first!");
     res.redirect("/login");
 }
 

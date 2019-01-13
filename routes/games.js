@@ -130,6 +130,7 @@ function isLoggedIn(req, res, next)
     {
         return next();
     }
+    req.flash("error", "Please login first");
     res.redirect("/login");
 }
 

@@ -5,6 +5,8 @@ var express = require("express"),
     bodyParser = require("body-parser"),
 //support mongo db
     mongoose = require("mongoose"),
+//for error messages
+    flash = require("connect-flash"),
 //user authentication variables
     passport = require("passport"),
     LocalStrategy = require("passport-local"),
@@ -45,6 +47,8 @@ app.use(express.static(__dirname + "/public"));
 
 app.use(methodOverride("_method"));
 
+app.use(flash());
+
 //will allow me to skip the .ejs after every ejs type file name
 app.set("view engine", "ejs");
 
@@ -55,6 +59,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(function(req, res, next)
 {
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 });
 
