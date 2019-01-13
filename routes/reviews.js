@@ -58,6 +58,23 @@ router.post("/", isLoggedIn, function(req,res)
     });
 });
 
+//delete route
+router.delete("/:comment_id", function(req, res)
+{
+    //find by id and remove
+    Comment.findByIdAndRemove(req.params.comment_id, function(err)
+    {
+        if(err)
+        {
+            res.redirect("back");
+        }
+        else
+        {
+            res.redirect("/games/" + req.params.id);
+        }
+    });
+});
+
 //function to check if a user is logged in
 function isLoggedIn(req, res, next)
 {

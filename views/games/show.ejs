@@ -52,8 +52,12 @@
                         <p class="h6 text-muted">
                             <%=comment.stars%> <i class="fas fa-star"></i>
                         </p>
+                        
                         <footer class="blockquote-footer"><%= comment.author.username %></footer>
                         </blockquote>
+                        <form action="/games/<%=games._id%>/reviews/<%=comment._id%>?_method=DELETE" method="POST">
+                            <input type="submit" class="btn btn-xs btn-danger" value="Delete">
+                        </form>
                 <% }) %>
                 
                 
