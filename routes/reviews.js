@@ -102,7 +102,7 @@ function checkReviewOwnership(req, res, next)
             }
             else
             {
-                //does user own the comment
+                //does user own the review
                 if(foundComment.author.id.equals(req.user._id))
                 {
                     next();

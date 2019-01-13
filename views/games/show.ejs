@@ -55,9 +55,12 @@
                         
                         <footer class="blockquote-footer"><%= comment.author.username %></footer>
                         </blockquote>
+                        <!--check comment ownership-->
+                        <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
                         <form action="/games/<%=games._id%>/reviews/<%=comment._id%>?_method=DELETE" method="POST">
-                            <input type="submit" class="btn btn-xs btn-danger" value="Delete">
+                            <button style="border: none; background-color: Transparent;" class="text-muted">&ensp;<i class="far fa-trash-alt"></i></button>
                         </form>
+                        <% } else {} %>
                 <% }) %>
                 
                 
