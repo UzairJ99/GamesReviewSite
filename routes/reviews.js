@@ -109,6 +109,7 @@ function checkReviewOwnership(req, res, next)
                 }
                 else
                 {
+                    req.flash("error", "You do not have permission to do that.");
                     res.redirect("back");
                 }
             }
@@ -116,6 +117,7 @@ function checkReviewOwnership(req, res, next)
     }
     else
     {
+        req.flash("error", "You need to be logged in to do that.");
         res.redirect("back");
     }
 }

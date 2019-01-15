@@ -101,6 +101,7 @@ router.put("/:id", checkGameOwnership, function(req, res)
        }
        else
        {
+           req.flash("success", "Game successfully updated!");
            //redirect to show page
            res.redirect("/games/" + updatedGame._id);
        }
@@ -118,6 +119,7 @@ router.delete("/:id", checkGameOwnership, function(req, res)
         }
         else
         {
+            req.flash("success", "Game successfully deleted!");
             res.redirect("/games");
         }
     });
@@ -157,6 +159,7 @@ function checkGameOwnership(req, res, next)
                 }
                 else
                 {
+                    req.flash("error", "You do not have permission to do that.");
                     res.redirect("back");
                 }
             }
@@ -164,6 +167,7 @@ function checkGameOwnership(req, res, next)
     }
     else
     {
+        req.flash("error", "You need to be logged in to do that.");
         res.redirect("back");
     }
 }

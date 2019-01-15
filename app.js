@@ -22,9 +22,6 @@ var express = require("express"),
 var gamesRoutes = require("./routes/games"),
     reviewRoutes = require("./routes/reviews"),
     indexRoutes = require("./routes/index");
-    
-//call function from seeds.js
-//seedDB();
 
 //Passport configuration
 app.use(require("express-session")(

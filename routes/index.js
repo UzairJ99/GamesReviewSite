@@ -31,7 +31,7 @@ router.post("/register", function(req, res)
     {
         if(err)
         {
-            console.log(err);
+            req.flash("error", err.message);
             return res.render("register");
         }
         passport.authenticate("local")(req, res, function()

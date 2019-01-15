@@ -47,38 +47,38 @@ function seedDB(){
             if(err){
                 console.log(err);
             }
-             //add a few campgrounds
-            data.forEach(function(seed)
-            {
-                Game.create(seed, function(err, game)
-                {
-                    if(err)
-                    {
-                        console.log(err)
-                    } 
-                    else 
-                    {
-                        //create a comment
-                        Comment.create(
-                            {
-                                text: "Cool game.",
-                                author: {username: "The Game Prism"},
-                                stars: 3.8
-                            }, function(err, comment)
-                            {
-                                if(err)
-                                {
-                                    console.log(err);
-                                } 
-                                else 
-                                {
-                                    game.comments.push(comment);
-                                    game.save();
-                                }
-                            });
-                    }
-                });
-            });
+            //  //add a few campgrounds
+            // data.forEach(function(seed)
+            // {
+            //     Game.create(seed, function(err, game)
+            //     {
+            //         if(err)
+            //         {
+            //             console.log(err)
+            //         } 
+            //         else 
+            //         {
+            //             //create a comment
+            //             Comment.create(
+            //                 {
+            //                     text: "Cool game.",
+            //                     author: {username: "The Game Prism"},
+            //                     stars: 3.8
+            //                 }, function(err, comment)
+            //                 {
+            //                     if(err)
+            //                     {
+            //                         console.log(err);
+            //                     } 
+            //                     else 
+            //                     {
+            //                         game.comments.push(comment);
+            //                         game.save();
+            //                     }
+            //                 });
+            //         }
+            //     });
+            // });
         });
     }); 
     //add a few comments
