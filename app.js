@@ -23,6 +23,8 @@ var gamesRoutes = require("./routes/games"),
     reviewRoutes = require("./routes/reviews"),
     indexRoutes = require("./routes/index");
 
+app.use(flash());
+
 //Passport configuration
 app.use(require("express-session")(
     {
@@ -43,8 +45,6 @@ mongoose.connect("mongodb://localhost:27017/games", {useNewUrlParser: true});
 app.use(express.static(__dirname + "/public"));
 
 app.use(methodOverride("_method"));
-
-app.use(flash());
 
 //will allow me to skip the .ejs after every ejs type file name
 app.set("view engine", "ejs");
@@ -67,6 +67,7 @@ app.use("/games", gamesRoutes);
 app.use("/games/:id/reviews", reviewRoutes);
 
 //start the server
-app.listen(process.env.PORT, process.env.IP, function(){
+//process.env.PORT, process.env.IP
+app.listen(3000, function(){
     console.log("Server started.");
 });
