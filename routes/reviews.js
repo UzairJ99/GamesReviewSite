@@ -68,11 +68,13 @@ router.delete("/:comment_id", checkReviewOwnership, function(req, res)
     {
         if(err)
         {
+            req.flash("error", "Something went wrong.");
             res.redirect("back");
         }
         else
         {
             //redirect to the game
+            req.flash("success", "Successfully deleted the review!");
             res.redirect("/games/" + req.params.id);
         }
     });
