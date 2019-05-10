@@ -31,11 +31,13 @@ router.post("/register", function(req, res)
     {
         if(err)
         {
-            req.flash("error", err.message);
-            return res.render("register");
+            req.flash("error", err.message); //displays error message
+            return res.render("register"); //goes back to register page
         }
         passport.authenticate("local")(req, res, function()
         {
+            //welcome the user
+            req.flash("success", "Welcome " + newUser.username + "!");
             res.redirect("/games");
         });
     });

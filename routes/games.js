@@ -48,7 +48,7 @@ router.get("/:id", function(req, res)
 });
 
 //form submits a post request for a new game
-router.post("/", function(req, res)
+router.post("/", isLoggedIn, function(req, res)
 {
    //get data from form and add to games database 
    var name = req.body.name;

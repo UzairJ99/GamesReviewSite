@@ -40,6 +40,7 @@ router.post("/", isLoggedIn, function(req,res)
             {
                 if(err)
                 {
+                    req.flash("error", "Something went wrong");
                     console.log(err);
                 }
                 else
@@ -51,6 +52,7 @@ router.post("/", isLoggedIn, function(req,res)
                     //connect the comment to the game
                     foundGame.comments.push(newComment);
                     foundGame.save();
+                    req.flash("success", "Successfully added a review!");
                     res.redirect("/games/" + foundGame._id);
                 }
             });
