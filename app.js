@@ -67,7 +67,9 @@ app.use("/games", gamesRoutes);
 app.use("/games/:id/reviews", reviewRoutes);
 
 //start the server
-//process.env.PORT, process.env.IP
-app.listen(3000, function(){
+//replace with process.env.PORT, process.env.IP after deploying
+//host on localhost:3000
+app.listen(3000, function()
+{
     console.log("Server started.");
 });
