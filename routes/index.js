@@ -32,7 +32,7 @@ router.post("/register", function(req, res)
         if(err)
         {
             req.flash("error", err.message); //displays error message
-            return res.render("register"); //goes back to register page
+            res.redirect("/register"); //goes back to register page
         }
         passport.authenticate("local")(req, res, function()
         {
