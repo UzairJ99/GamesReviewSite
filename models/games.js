@@ -6,6 +6,8 @@ var gameSchema = new mongoose.Schema(
         image: String,
         rating: String,
         stars: Number,
+        numOfReviews: Number,
+        totalCount: Number,
         description: String,
         comments: 
         [{

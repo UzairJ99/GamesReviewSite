@@ -59,7 +59,7 @@ router.post("/", isLoggedIn, function(req, res)
    var author = {id: req.user._id, username: req.user.username};
    
    //make new game object from variables
-   var newGame = {name: name, image: image, rating: rating, stars: 0, description: desc, author: author};
+   var newGame = {name: name, image: image, rating: rating, stars: 0, totalCount: 0, numOfStars: 0, description: desc, author: author};
    
    //add to the database
    Game.create(newGame, function(err, newgame)
